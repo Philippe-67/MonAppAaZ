@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "lint": "eslint src --ext .ts,.tsx --report-unused-disable-directives",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "lint:ci": "eslint src --ext .ts,.tsx --max-warnings 0",
+     "format": "prettier --write src/**/*.{ts,tsx,css,json}",
+    "format:check": "prettier --check src/**/*.{ts,tsx,css,json}",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -18,11 +22,18 @@
     "@types/node": "^24.12.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.61.1",
+    "@typescript-eslint/parser": "^8.61.1",
     "@vitejs/plugin-react": "^6.0.1",
-    "eslint": "^10.3.0",
+    "eslint": "^10.5.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.6",
+    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
+    "prettier": "^3.8.4",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",
     "vite": "^8.0.12"

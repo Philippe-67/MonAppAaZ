@@ -1,0 +1,10 @@
+# Dossiers générés
+node_modules/
+dist/
+build/
+coverage/
+
+# Fichiers à ne pas reformater
+*.min.js
+*.min.css
+package-lock.json

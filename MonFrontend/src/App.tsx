@@ -7,15 +7,15 @@ function App() {
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/prenoms`)
-      .then(res => {
+      .then((res) => {
         if (!res.ok) throw new Error('Erreur API');
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
         setPrenoms(data);
         setLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         setError(err.message);
         setLoading(false);
       });

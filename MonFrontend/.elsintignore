@@ -1,0 +1,19 @@
+# ─── Dépendances ───────────────────────────────────────
+node_modules/
+
+# ─── Dossiers de build générés automatiquement ─────────
+dist/
+build/
+coverage/
+
+# ─── Fichiers de configuration Vite / Jest ─────────────
+vite.config.ts
+vite.config.js
+jest.config.ts
+jest.config.js
+
+# ─── Fichiers de déclaration TypeScript générés ─────────
+*.d.ts
+
+# ─── Fichiers statiques publics ─────────────────────────
+public/
