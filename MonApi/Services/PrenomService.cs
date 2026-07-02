@@ -1,23 +1,33 @@
-namespace MonApi.Services
-{
-    public class PrenomService
-    {
-        private readonly List<string> _prenoms = new() { "Philippe", "Christelle", "Guillaume","Aurore","Margaux","Hugo" };
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
+using MonApi.Models;
+using MonApi.Settings;
 
-        public IEnumerable<string> GetAll() => _prenoms;
-        public string? Get(int id) => (id >= 0 && id < _prenoms.Count) ? _prenoms[id] : null;
-        public int Add(string prenom) { _prenoms.Add(prenom); return _prenoms.Count - 1; }
-        public bool Update(int id, string prenom)
-        {
-            if (id < 0 || id >= _prenoms.Count) return false;
-            _prenoms[id] = prenom;
-            return true;
-        }
-        public bool Delete(int id)
-        {
-            if (id < 0 || id >= _prenoms.Count) return false;
-            _prenoms.RemoveAt(id);
-            return true;
-        }
+namespace MonApi.Services;
+
+public class PrenomService
+{
+    private readonly IMongoCollection<Prenom> _collection;
+
+    public PrenomService(IOptions<MongoDBSettings> settings)
+    {
+        var client = new MongoClient(settings.Value.ConnectionString);
+        var database = client.GetDatabase(settings.Value.DatabaseName);
+        _collection = database.GetCollection<Prenom>(settings.Value.CollectionName);
     }
+
+    public async Task<List<Prenom>> GetAsync() =>
+        await _collection.Find(_ => true).ToListAsync();
+
+    public async Task<Prenom?> GetByIdAsync(string id) =>
+        await _collection.Find(p => p.Id == id).FirstOrDefaultAsync();
+
+    public async Task CreateAsync(Prenom prenom) =>
+        await _collection.InsertOneAsync(prenom);
+
+    public async Task UpdateAsync(string id, Prenom prenom) =>
+        await _collection.ReplaceOneAsync(p => p.Id == id, prenom);
+
+    public async Task DeleteAsync(string id) =>
+        await _collection.DeleteOneAsync(p => p.Id == id);
 }

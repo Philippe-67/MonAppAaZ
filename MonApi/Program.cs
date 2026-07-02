@@ -1,33 +1,38 @@
+using MonApi.Settings;
+using MonApi.Services;
+using Scalar.AspNetCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
+// MongoDB
+builder.Services.Configure<MongoDBSettings>(
+    builder.Configuration.GetSection("MongoDB"));
+builder.Services.AddSingleton<PrenomService>();
+
+// CORS pour React
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(policy =>
+    options.AddPolicy("AllowLocalhost5174", policy =>  // 📌 Nom défini 
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins("http://localhost:5174")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
 });
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
 builder.Services.AddControllers();
+builder.Services.AddOpenApi();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
-app.UseHttpsRedirection();
-app.UseCors();
-app.MapControllers(); 
-
-
-
-
+// ⚠️ Le nom ici doit être IDENTIQUE à celui défini au-dessus !
+app.UseCors("AllowLocalhost5174");  // 📌 Corrigé !
+app.UseAuthorization();
+app.MapControllers();
 app.Run();
-
