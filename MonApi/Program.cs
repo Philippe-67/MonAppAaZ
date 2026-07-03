@@ -7,7 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 // MongoDB
 builder.Services.Configure<MongoDBSettings>(
     builder.Configuration.GetSection("MongoDB"));
-builder.Services.AddSingleton<PrenomService>();
+// Enregistrer le repository et le service pour l'injection de dépendances
+builder.Services.AddSingleton<IPrenomsRepository, PrenomsRepository>();
+builder.Services.AddSingleton<IPrenomsService, PrenomsService>();
 
 // CORS pour React
 builder.Services.AddCors(options =>
