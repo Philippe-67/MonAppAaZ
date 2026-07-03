@@ -14,9 +14,9 @@ builder.Services.AddSingleton<IPrenomsService, PrenomsService>();
 // CORS pour React
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowLocalhost5174", policy =>  // 📌 Nom défini 
+    options.AddPolicy("AllowLocalhost5173", policy =>  // 📌 Nom défini 
     {
-        policy.WithOrigins("http://localhost:5174")
+        policy.WithOrigins("http://localhost:5173")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -34,7 +34,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // ⚠️ Le nom ici doit être IDENTIQUE à celui défini au-dessus !
-app.UseCors("AllowLocalhost5174");  // 📌 Corrigé !
+app.UseCors("AllowLocalhost5173");  // 📌 Corrigé !
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

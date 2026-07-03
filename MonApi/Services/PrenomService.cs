@@ -1,33 +1,27 @@
-using Microsoft.Extensions.Options;
-using MongoDB.Driver;
+
 using MonApi.Models;
-using MonApi.Settings;
 
-namespace MonApi.Services;
-
-public class PrenomService
+namespace MonApi.Services
 {
-    private readonly IMongoCollection<Prenom> _collection;
 
-    public PrenomService(IOptions<MongoDBSettings> settings)
+public class PrenomsService : IPrenomsService
+{
+    private readonly IPrenomsRepository _repository;
+
+    public PrenomsService(IPrenomsRepository repository)
     {
-        var client = new MongoClient(settings.Value.ConnectionString);
-        var database = client.GetDatabase(settings.Value.DatabaseName);
-        _collection = database.GetCollection<Prenom>(settings.Value.CollectionName);
+        _repository = repository;
     }
 
-    public async Task<List<Prenom>> GetAsync() =>
-        await _collection.Find(_ => true).ToListAsync();
+    public async Task<IEnumerable<Prenoms>> GetAllPrenomsAsync() => await _repository.GetAllAsync();
 
-    public async Task<Prenom?> GetByIdAsync(string id) =>
-        await _collection.Find(p => p.Id == id).FirstOrDefaultAsync();
+    public async Task<Prenoms> GetPrenomByIdAsync(string id) => await _repository.GetByIdAsync(id);
 
-    public async Task CreateAsync(Prenom prenom) =>
-        await _collection.InsertOneAsync(prenom);
+    public async Task AddPrenomAsync(Prenoms prenom) => await _repository.AddAsync(prenom);
 
-    public async Task UpdateAsync(string id, Prenom prenom) =>
-        await _collection.ReplaceOneAsync(p => p.Id == id, prenom);
+    public async Task UpdatePrenomAsync(Prenoms prenom) => await _repository.UpdateAsync(prenom);
 
-    public async Task DeleteAsync(string id) =>
-        await _collection.DeleteOneAsync(p => p.Id == id);
+    public async Task DeletePrenomAsync(string id) => await _repository.DeleteAsync(id);
+}
+
 }

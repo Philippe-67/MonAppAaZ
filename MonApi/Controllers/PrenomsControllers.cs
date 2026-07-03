@@ -8,9 +8,9 @@ namespace MonApi.Controllers;
 [Route("api/[controller]")]
 public class PrenomsController : ControllerBase
 {
-    private readonly PrenomService _prenomService;
+    private readonly IPrenomsService _prenomService;
 
-    public PrenomsController(PrenomService prenomService)
+    public PrenomsController(IPrenomsService prenomService)
     {
         _prenomService = prenomService;
     }
@@ -19,7 +19,7 @@ public class PrenomsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var prenoms = await _prenomService.GetAsync();
+        var prenoms = await _prenomService.GetAllPrenomsAsync();
         return Ok(prenoms);
     }
 
@@ -27,7 +27,7 @@ public class PrenomsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(string id)
     {
-        var prenom = await _prenomService.GetByIdAsync(id);
+        var prenom = await _prenomService.GetPrenomByIdAsync(id);
         if (prenom is null)
             return NotFound($"Prénom avec l'id {id} introuvable.");
         return Ok(prenom);
@@ -35,22 +35,22 @@ public class PrenomsController : ControllerBase
 
     // ✅ CREATE - /api/prenoms
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] Prenom prenom)
+    public async Task<IActionResult> Create([FromBody] Prenoms prenom)
     {
-        await _prenomService.CreateAsync(prenom);
+        await _prenomService.AddPrenomAsync(prenom);
         return CreatedAtAction(nameof(GetById), new { id = prenom.Id }, prenom);
     }
 
     // ✅ UPDATE - /api/prenoms/{id}
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(string id, [FromBody] Prenom prenom)
+    public async Task<IActionResult> Update(string id, [FromBody] Prenoms prenom)
     {
-        var existing = await _prenomService.GetByIdAsync(id);
+        var existing = await _prenomService.GetPrenomByIdAsync(id);
         if (existing is null)
             return NotFound($"Prénom avec l'id {id} introuvable.");
 
         prenom.Id = id;
-        await _prenomService.UpdateAsync(id, prenom);
+        await _prenomService.UpdatePrenomAsync(prenom);
         return NoContent();
     }
 
@@ -58,11 +58,11 @@ public class PrenomsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(string id)
     {
-        var existing = await _prenomService.GetByIdAsync(id);
+        var existing = await _prenomService.GetPrenomByIdAsync(id);
         if (existing is null)
             return NotFound($"Prénom avec l'id {id} introuvable.");
 
-        await _prenomService.DeleteAsync(id);
+        await _prenomService.DeletePrenomAsync(id);
         return NoContent();
     }
 }
