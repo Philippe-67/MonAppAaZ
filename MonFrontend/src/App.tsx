@@ -1,39 +1,20 @@
-import { useEffect, useState } from 'react';
-import type { Prenom } from './Types/Prenom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import MotsPage from './pages/MotsPages'; // Vérifie le nom du fichier
+import PrenomsPage from './pages/PrenomsPages'; // Vérifie le nom du fichier
 
-function App() {
-  const [prenoms, setPrenoms] = useState<Prenom[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/prenoms`)
-      .then((res) => {
-        if (!res.ok) throw new Error('Erreur API');
-        return res.json();
-      })
-      .then((data: Prenom[]) => { // Indiquez le type ici
-        setPrenoms(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, []);
-
-  return (
-    <div>
-      <h1>Liste des prénoms</h1>
-      {loading && <p>Chargement...</p>}
-      {error && <p style={{ color: 'red' }}>Erreur : {error}</p>}
-      <ul>
-        {prenoms.map((prenom) => (
-          <li key={prenom.id}>{prenom.nom}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+const App: React.FC = () => (
+  <Router>
+    <nav style={{ padding: '10px', backgroundColor: '#f0f0f0' }}>
+      <Link to="/prenoms" style={{ marginRight: '15px' }}>Prénoms</Link>
+      <Link to="/mots">Mots</Link>
+    </nav>
+    <Routes>
+      <Route path="/prenoms" element={<PrenomsPage />} />
+      <Route path="/mots" element={<MotsPage />} />
+      <Route path="/" element={<h2>Accueil</h2>} />
+    </Routes>
+  </Router>
+);
 
 export default App;
