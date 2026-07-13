@@ -1,7 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import MotsPage from './pages/MotsPages'; // Vérifie le nom du fichier
-import PrenomsPage from './pages/PrenomsPages'; // Vérifie le nom du fichier
+import PageGestionMots from './pages/PageGestionMots';
+import EditMotPage from './pages/EditMotPage';
+import PrenomsPage from './pages/PrenomsPages';
+//import PrenomsPage from './pages/PrenomsPages'; // Vérifie le nom du fichier
 
 const App: React.FC = () => (
   <Router>
@@ -10,8 +12,10 @@ const App: React.FC = () => (
       <Link to="/mots">Mots</Link>
     </nav>
     <Routes>
+     
+      <Route path="/mots" element={<PageGestionMots />} />
+      <Route path="/mots/:id" element={<EditMotPage />} />
       <Route path="/prenoms" element={<PrenomsPage />} />
-      <Route path="/mots" element={<MotsPage />} />
       <Route path="/" element={<h2>Accueil</h2>} />
     </Routes>
   </Router>
