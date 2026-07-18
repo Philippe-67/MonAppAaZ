@@ -1,4 +1,6 @@
 using MonApi.Settings;
+using MonApi.Repositories;
+using MonApi.IServices;
 using MonApi.Services;
 using Scalar.AspNetCore;
 
@@ -8,15 +10,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<MongoDBSettings>(
     builder.Configuration.GetSection("MongoDB"));
 // Enregistrer le repository et le service pour l'injection de dépendances
-builder.Services.AddSingleton<IPrenomsRepository, PrenomsRepository>();
-builder.Services.AddSingleton<IPrenomsService, PrenomsService>();
+//builder.Services.AddSingleton<IPrenomsRepository, PrenomsRepository>();
+//builder.Services.AddSingleton<IPrenomsService, PrenomsService>();
+builder.Services.AddSingleton<IMotsRepository, MotsRepository>();
+builder.Services.AddSingleton<IMotsService, MotsService>();
+
 
 // CORS pour React
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalhost5173", policy =>  // 📌 Nom défini 
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins("http://localhost:5173", "http://localhost:5174")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });

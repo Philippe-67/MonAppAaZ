@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "MonApi"
+		},
+		{
+			"path": "MonFrontend"
+		},
+		{
+			"path": "MonApiTests"
+		}
+	]
+}

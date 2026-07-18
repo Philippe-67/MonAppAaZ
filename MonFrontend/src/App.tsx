@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import PageGestionMots from './pages/PageGestionMots';
 import EditMotPage from './pages/EditMotPage';
-import PrenomsPage from './pages/PrenomsPages';
+//import PrenomsPage from './pages/PrenomsPages';
 //import PrenomsPage from './pages/PrenomsPages'; // Vérifie le nom du fichier
 
 const App: React.FC = () => (
@@ -15,7 +15,7 @@ const App: React.FC = () => (
      
       <Route path="/mots" element={<PageGestionMots />} />
       <Route path="/mots/:id" element={<EditMotPage />} />
-      <Route path="/prenoms" element={<PrenomsPage />} />
+      {/* <Route path="/prenoms" element={<PrenomsPage />} /> */}
       <Route path="/" element={<h2>Accueil</h2>} />
     </Routes>
   </Router>
