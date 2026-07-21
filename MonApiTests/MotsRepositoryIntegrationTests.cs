@@ -33,7 +33,7 @@ namespace MonApiTests
         [Fact]
         public async Task AddGetUpdateDelete_Works()
         {
-            var mot = new Mots { MotFr = "testfr", MotEn = "testen" };
+            var mot = new Mot { MotFr = "testfr", MotEn = "testen" };
 
             // Add
             await _repository.AddAsync(mot);

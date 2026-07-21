@@ -22,22 +22,22 @@ namespace MonApiTests
         [Fact]
         public async Task GetAllMotsAsync_ReturnsAll()
         {
-            var items = new List<Mots>
+            var items = new List<Mot>
             {
-                new Mots { Id = "1", MotFr = "un", MotEn = "one" },
-                new Mots { Id = "2", MotFr = "deux", MotEn = "two" }
+                new Mot { Id = "1", MotFr = "un", MotEn = "one" },
+                new Mot { Id = "2", MotFr = "deux", MotEn = "two" }
             };
             _repoMock.Setup(r => r.GetAllAsync()).ReturnsAsync(items);
 
             var result = await _service.GetAllMotsAsync();
 
-            Assert.Equal(2, ((IEnumerable<Mots>)result).AsList().Count);
+            Assert.Equal(2, ((IEnumerable<Mot>)result).AsList().Count);
         }
 
         [Fact]
         public async Task GetAllMotsAsync_ReturnsEmpty_WhenNoMots()
         {
-            _repoMock.Setup(r => r.GetAllAsync()).ReturnsAsync(new List<Mots>());
+            _repoMock.Setup(r => r.GetAllAsync()).ReturnsAsync(new List<Mot>());
 
             var result = await _service.GetAllMotsAsync();
 
@@ -47,7 +47,7 @@ namespace MonApiTests
         [Fact]
         public async Task GetMotById_ReturnsNull_WhenNotFound()
         {
-            _repoMock.Setup(r => r.GetByIdAsync("unknown")).ReturnsAsync((Mots)null);
+            _repoMock.Setup(r => r.GetByIdAsync("unknown")).ReturnsAsync((Mot)null);
 
             var result = await _service.GetMotByIdAsync("unknown");
 
@@ -64,7 +64,7 @@ namespace MonApiTests
             _repoMock.Setup(r => r.GetByIdAsync("1")).ThrowsAsync(ex);
             await Assert.ThrowsAsync<System.Exception>(() => _service.GetMotByIdAsync("1"));
 
-            var mot = new Mots { Id = "x", MotFr = "x", MotEn = "x" };
+            var mot = new Mot { Id = "x", MotFr = "x", MotEn = "x" };
             _repoMock.Setup(r => r.AddAsync(mot)).ThrowsAsync(ex);
             await Assert.ThrowsAsync<System.Exception>(() => _service.AddMotAsync(mot));
 
@@ -78,7 +78,7 @@ namespace MonApiTests
         [Fact]
         public async Task AddMotAsync_CallsRepository()
         {
-            var mot = new Mots { Id = "3", MotFr = "trois", MotEn = "three" };
+            var mot = new Mot { Id = "3", MotFr = "trois", MotEn = "three" };
             _repoMock.Setup(r => r.AddAsync(mot)).Returns(Task.CompletedTask).Verifiable();
 
             await _service.AddMotAsync(mot);
@@ -89,7 +89,7 @@ namespace MonApiTests
         [Fact]
         public async Task UpdateMotAsync_CallsRepository()
         {
-            var mot = new Mots { Id = "4", MotFr = "quatre", MotEn = "four" };
+            var mot = new Mot { Id = "4", MotFr = "quatre", MotEn = "four" };
             _repoMock.Setup(r => r.UpdateAsync(mot)).Returns(Task.CompletedTask).Verifiable();
 
             await _service.UpdateMotAsync(mot);

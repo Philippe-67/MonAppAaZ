@@ -1,0 +1,24 @@
+@MonApi_HostAddress = http://localhost:5270
+
+GET {{MonApi_HostAddress}}/mots/
+Accept: application/json
+
+###
+GET {{MonApi_HostAddress}}/mots/4
+Accept: application/json
+
+###
+POST {{MonApi_HostAddress}}/mots
+Content-Type: application/json
+
+"Bonjour"
+
+###
+PUT {{MonApi_HostAddress}}/mots/4
+Content-Type: application/json
+
+"Au revoir"
+###
+DELETE {{MonApi_HostAddress}}/mots/5
+
+###

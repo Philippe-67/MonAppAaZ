@@ -4,10 +4,11 @@ namespace MonApi.IServices
 {
 public interface IMotsService
 {
-    Task<IEnumerable<Mots>> GetAllMotsAsync();
-    Task<Mots> GetMotByIdAsync(string id);
-    Task AddMotAsync(Mots mot);
-    Task UpdateMotAsync(Mots mot);
+    Task<IEnumerable<Mot>> GetAllMotsAsync();
+    Task<Mot> GetMotByIdAsync(string id);
+    Task AddMotAsync(Mot mot);
+    Task UpdateMotAsync(Mot mot);
     Task DeleteMotAsync(string id);
+    Task<List<InterroItemDto>> GetInterroItemsAsync(int count);
 }
 }

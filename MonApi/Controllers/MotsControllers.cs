@@ -36,7 +36,7 @@ public class MotsController : ControllerBase
 
     // ✅ CREATE - /api/mots
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] Mots mot)
+    public async Task<IActionResult> Create([FromBody] Mot mot)
     {
         await _motsService.AddMotAsync(mot);
         return CreatedAtAction(nameof(GetById), new { id = mot.Id }, mot);
@@ -44,7 +44,7 @@ public class MotsController : ControllerBase
 
     // ✅ UPDATE - /api/mots/{id}
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(string id, [FromBody] Mots mot)
+    public async Task<IActionResult> Update(string id, [FromBody] Mot mot)
     {
         var existing = await _motsService.GetMotByIdAsync(id);
         if (existing is null)
@@ -65,4 +65,13 @@ public class MotsController : ControllerBase
 
         await _motsService.DeleteMotAsync(id);
         return NoContent();
+    }
+
+    // ✅ GET INTERRO ITEMS - /api/mots/interro?count=5    
+
+    [HttpGet("interro")]
+    public async Task<IActionResult> GetInterro([FromQuery] int count = 5)
+    {
+        var items = await _motsService.GetInterroItemsAsync(count);
+        return Ok(items);
     }}

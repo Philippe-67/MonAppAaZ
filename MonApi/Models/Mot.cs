@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace MonApi.Models;
 
-public class Mots
+public class Mot
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]

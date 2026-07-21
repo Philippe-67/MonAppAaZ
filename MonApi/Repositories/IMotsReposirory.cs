@@ -5,10 +5,10 @@ namespace MonApi.Repositories
 {
 public interface IMotsRepository
 {
-    Task<IEnumerable<Mots>> GetAllAsync();
-    Task<Mots> GetByIdAsync(string id);
-    Task AddAsync(Mots mot);
-    Task UpdateAsync(Mots mot);
+    Task<IEnumerable<Mot>> GetAllAsync();
+    Task<Mot> GetByIdAsync(string id);
+    Task AddAsync(Mot mot);
+    Task UpdateAsync(Mot mot);
     Task DeleteAsync(string id);
 }
 }

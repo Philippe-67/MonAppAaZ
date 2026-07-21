@@ -58,3 +58,26 @@ export const getMotById = (id: string) =>
     return mapBackendToFrontend(item);
   });
 
+  // --- NOUVELLE FONCTION AJOUTÉE ICI (STYLE ASYNC/AWAIT) ---
+
+import type { InterroItem } from '../types/interro'; // Assurez-vous que cet import est bien en haut du fichier avec les autres
+
+export async function fetchInterroItems(count: number = 5): Promise<InterroItem[]> {
+  // On récupère l'URL de base de l'API.
+  // Note: votre fichier utilise API_URL, on va rester cohérent avec ça.
+  const API_URL = import.meta.env.VITE_API_URL;
+
+  // On construit l'URL complète pour notre nouvel endpoint
+  const response = await fetch(`${API_URL}/api/Mots/interro?count=${count}`);
+    
+  // Si l'API renvoie une erreur (ex: 404, 500), on lève une exception
+  // pour que le composant puisse l'attraper et afficher un message d'erreur.
+  if (!response.ok) {
+    throw new Error("Erreur lors de la récupération des questions de l'interro.");
+  }
+    
+  // Si tout s'est bien passé, on retourne le corps de la réponse au format JSON.
+  return response.json();
+}
+
+
