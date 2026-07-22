@@ -1,3 +1,7 @@
+import type { InterroItem } from '../types/interro'; // Assurez-vous que cet import est bien en haut du fichier avec les autres
+import type { QuizQuestion } from '../types/quiz';
+
+
 const API_URL = import.meta.env.VITE_API_URL; // Assure-toi que cette variable est bien configurée dans ton environnement
 
 // Helper: map backend object to frontend shape
@@ -60,7 +64,6 @@ export const getMotById = (id: string) =>
 
   // --- NOUVELLE FONCTION AJOUTÉE ICI (STYLE ASYNC/AWAIT) ---
 
-import type { InterroItem } from '../types/interro'; // Assurez-vous que cet import est bien en haut du fichier avec les autres
 
 export async function fetchInterroItems(count: number = 5): Promise<InterroItem[]> {
   // On récupère l'URL de base de l'API.
@@ -73,11 +76,27 @@ export async function fetchInterroItems(count: number = 5): Promise<InterroItem[
   // Si l'API renvoie une erreur (ex: 404, 500), on lève une exception
   // pour que le composant puisse l'attraper et afficher un message d'erreur.
   if (!response.ok) {
-    throw new Error("Erreur lors de la récupération des questions de l'interro.");
+    const text = await response.text();
+    throw new Error(`Erreur ${response.status} lors de la récupération des questions de l'interro: ${text}`);
   }
-    
-  // Si tout s'est bien passé, on retourne le corps de la réponse au format JSON.
+
+  return response.json();
+
+}
+// À ajouter à la fin de MonFrontend/src/services/motService.ts
+
+export async function fetchQuizQuestions(count: number = 5): Promise<QuizQuestion[]> {
+  const API_URL = import.meta.env.VITE_API_URL;
+  const response = await fetch(`${API_URL}/api/Mots/quiz?count=${count}`);
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`Erreur ${response.status} lors de la récupération des questions du quiz: ${text}`);
+  }
+
   return response.json();
 }
+
+
 
 

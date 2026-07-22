@@ -1,8 +1,5 @@
 export interface Mot {
-  id: number;
-  texte: string;
-  definition?: string;
-  categorie?: string;
-  dateCreation?: Date;
-  dateModification?: Date;
+  id: string;
+  motFr: string;
+  motEn: string;
 }

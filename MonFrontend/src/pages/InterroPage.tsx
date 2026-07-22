@@ -10,16 +10,22 @@ export function InterroPage() {
 
   // La liste des questions chargées depuis l'API
   const [items, setItems] = useState<InterroItem[]>([]);
+
   // L'index de la question actuellement affichée
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
+
   // La valeur actuelle du champ de saisie de l'utilisateur
   const [userAnswer, setUserAnswer] = useState('');
+
   // Le score de l'utilisateur
   const [score, setScore] = useState(0);
+
   // Un booléen pour savoir si on doit afficher le score final
   const [showScore, setShowScore] = useState(false);
+
   // Un booléen pour afficher un message pendant que les données chargent
   const [loading, setLoading] = useState(true);
+  
   // Pour stocker un message d'erreur s'il y en a un
   const [error, setError] = useState<string | null>(null);
 

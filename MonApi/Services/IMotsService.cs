@@ -10,5 +10,6 @@ public interface IMotsService
     Task UpdateMotAsync(Mot mot);
     Task DeleteMotAsync(string id);
     Task<List<InterroItemDto>> GetInterroItemsAsync(int count);
+    Task<List<QuizQuestionDto>> GetQuizQuestionsAsync(int count);
 }
 }

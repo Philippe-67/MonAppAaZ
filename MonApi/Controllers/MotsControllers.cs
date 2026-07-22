@@ -74,4 +74,13 @@ public class MotsController : ControllerBase
     {
         var items = await _motsService.GetInterroItemsAsync(count);
         return Ok(items);
-    }}
+    }
+
+// ✅ GET QUIZ QUESTIONS - /api/mots/quiz?count=5
+    [HttpGet("quiz")]
+    public async Task<IActionResult> GetQuiz([FromQuery] int count = 5)
+    {
+        var questions = await _motsService.GetQuizQuestionsAsync(count);
+        return Ok(questions);
+    }
+}
